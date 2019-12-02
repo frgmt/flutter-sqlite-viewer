@@ -33,8 +33,7 @@ class _DataListState extends State<DataList> {
     return Scaffold(
         appBar: AppBar(title: Text(tableName)),
         body: Container(
-            padding: EdgeInsets.all(20.0),
-            child: _getWidget(context)));
+            padding: EdgeInsets.all(20.0), child: _getWidget(context)));
   }
 
   Future<List> _getValues() async {

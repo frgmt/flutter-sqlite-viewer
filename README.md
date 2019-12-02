@@ -4,7 +4,7 @@
 ![GitHub last commit](https://img.shields.io/github/last-commit/frgmt/flutter-sqlite-viewer.svg)
 [![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/frgmt/flutter-sqlite-viewer)
 
-This Flutter package provides a SQLite data of your applicaton.
+This Flutter package provides a widget to display the contents of SQLite.
 
 <img src="https://raw.githubusercontent.com/frgmt/flutter-sqlite-viewer/master/src/s1.gif" height="400" alt="Viewer">
 
