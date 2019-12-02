@@ -11,7 +11,7 @@ This Flutter package provides a widget to display the contents of SQLite.
 # 💻 Installation
 In the `dependencies:` section of your `pubspec.yaml`, add the following line:
 
-[![Version](https://img.shields.io/pub/v/flutter-sqlite-viewer.svg)](https://pub.dartlang.org/packages/sqlite_viewer)
+[![Version](https://img.shields.io/pub/v/sqlite_viewer.svg)](https://pub.dartlang.org/packages/sqlite_viewer)
 
 ```yaml
 dependencies:
