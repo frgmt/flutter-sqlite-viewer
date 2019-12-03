@@ -1,3 +1,6 @@
+## 1.0.2
+- Fix document
+
 ## 1.0.1
 - Fix document
 

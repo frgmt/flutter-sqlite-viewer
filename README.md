@@ -1,4 +1,4 @@
-# Json Table Widget
+# SQLite Viewer Widget
 
 [![GitHub stars](https://img.shields.io/github/stars/frgmt/flutter-sqlite-viewer.svg?style=social)](https://github.com/frgmt/flutter-sqlite-viewer)
 ![GitHub last commit](https://img.shields.io/github/last-commit/frgmt/flutter-sqlite-viewer.svg)

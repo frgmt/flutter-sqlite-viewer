@@ -6,13 +6,10 @@ PODS:
   - sqflite (0.0.1):
     - Flutter
     - FMDB (~> 2.7.2)
-  - sqlite_viewer (0.0.1):
-    - Flutter
 
 DEPENDENCIES:
   - Flutter (from `.symlinks/flutter/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
-  - sqlite_viewer (from `.symlinks/plugins/sqlite_viewer/ios`)
 
 SPEC REPOS:
   trunk:
@@ -23,14 +20,11 @@ EXTERNAL SOURCES:
     :path: ".symlinks/flutter/ios"
   sqflite:
     :path: ".symlinks/plugins/sqflite/ios"
-  sqlite_viewer:
-    :path: ".symlinks/plugins/sqlite_viewer/ios"
 
 SPEC CHECKSUMS:
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   sqflite: 4001a31ff81d210346b500c55b17f4d6c7589dd0
-  sqlite_viewer: 4daac8d534484a2c6f97bea2920ca5a035a9ed93
 
 PODFILE CHECKSUM: b6a0a141693093b304368d08511b46cf3d1d0ac5
 
