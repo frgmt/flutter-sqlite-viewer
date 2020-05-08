@@ -1,6 +1,6 @@
 name: sqlite_viewer
 description: A Flutter package provides a widget to display the contents of SQLite.
-version: 1.0.2
+version: 1.0.3
 author: FRAGMENT, LLC.<info@fragment.co.jp>
 homepage: https://github.com/frgmt
 
