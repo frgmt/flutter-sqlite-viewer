@@ -8,6 +8,8 @@ import 'package:sqflite/sqflite.dart';
 import './sqlite_viewer_tables.dart';
 
 class DatabaseList extends StatefulWidget {
+  DatabaseList({this.dbPath});
+  final String dbPath;
   @override
   _DatabaseListState createState() => _DatabaseListState();
 }
@@ -29,7 +31,12 @@ class _DatabaseListState extends State<DatabaseList> {
   }
 
   Future<List> _getDatabases() async {
-    final path = await getDatabasesPath();
+    var path = "";
+    if (widget.dbPath != null && widget.dbPath.isNotEmpty) {
+        path = widget.dbPath;
+    } else {
+      path = await getDatabasesPath();
+    }
     final dir = new Directory(path.toString());
     final databases = dir.listSync();
     if (databases.length > 0) {
