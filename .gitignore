@@ -24,10 +24,12 @@
 **/doc/api/
 .dart_tool/
 .flutter-plugins
+.flutter-plugins-dependencies
 .packages
 .pub-cache/
 .pub/
 /build/
+pubspec.lock
 
 # Android related
 **/android/**/gradle-wrapper.jar
@@ -37,6 +39,7 @@
 **/android/gradlew.bat
 **/android/local.properties
 **/android/**/GeneratedPluginRegistrant.java
+**/android/gradle.properties
 
 # iOS/XCode related
 **/ios/**/*.mode1v3
