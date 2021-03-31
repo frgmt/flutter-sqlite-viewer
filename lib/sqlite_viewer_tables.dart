@@ -7,19 +7,14 @@ import './sqlite_viewer_values.dart';
 class TableList extends StatefulWidget {
   final String databasePath;
 
-  TableList({@required this.databasePath});
+  const TableList({@required this.databasePath});
 
   @override
-  _TableListState createState() => _TableListState(databasePath: databasePath);
+  _TableListState createState() => _TableListState();
 }
 
 class _TableListState extends State<TableList> {
-  final String databasePath;
   Future<List> _tables;
-
-  _TableListState({
-    @required this.databasePath,
-  });
 
   @override
   void initState() {
@@ -30,16 +25,13 @@ class _TableListState extends State<TableList> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(title: Text(basename(databasePath))),
-        body: _getWidget(context));
+    return Scaffold(appBar: AppBar(title: Text(basename(widget.databasePath))), body: _getWidget(context));
   }
 
   Future<List> _getTables() async {
-    final db = await openDatabase(databasePath);
-    final tables = await db.rawQuery(
-        'SELECT name FROM sqlite_master WHERE type = "table" and name != "sqlite_sequence"');
-    if (tables.length > 0) {
+    final db = await openDatabase(widget.databasePath);
+    final tables = await db.rawQuery('SELECT name FROM sqlite_master WHERE type = "table" and name != "sqlite_sequence"');
+    if (tables.isNotEmpty) {
       return tables;
     }
     return null;
@@ -51,32 +43,33 @@ class _TableListState extends State<TableList> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(
-                padding: EdgeInsets.all(10.0),
+                padding: const EdgeInsets.all(10.0),
                 itemCount: snapshot.data.length,
                 itemBuilder: (context, index) {
                   return InkWell(
-                    child: Container(
-                        child: ListTile(
-                          leading: Icon(Icons.folder),
-                          title: Text(snapshot.data[index]["name"]),
-                        ),
-                        decoration: new BoxDecoration(
-                            border: new Border(bottom: new BorderSide()))),
                     onTap: () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (_) => DataList(
-                                  databasePath: databasePath,
-                                  tableName: snapshot.data[index]["name"])));
+                                    databasePath: widget.databasePath,
+                                    tableName: snapshot.data[index]["name"].toString(),
+                                  )));
                     },
+                    child: Container(
+                      decoration: const BoxDecoration(border: Border(bottom: BorderSide())),
+                      child: ListTile(
+                        leading: const Icon(Icons.folder),
+                        title: Text(snapshot.data[index]["name"].toString()),
+                      ),
+                    ),
                   );
                 });
           } else if (snapshot.hasError) {
             return Text("${snapshot.error}");
           }
 
-          return Text("");
+          return const Center(child: CircularProgressIndicator());
         });
   }
 }
