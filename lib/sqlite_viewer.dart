@@ -8,7 +8,12 @@ import 'package:sqflite/sqflite.dart';
 import './sqlite_viewer_tables.dart';
 
 class DatabaseList extends StatefulWidget {
-  DatabaseList({this.dbPath});
+  /// open the database viewer in full screen page
+  static void open(BuildContext context, {String path}) {
+    Navigator.push(context, MaterialPageRoute(builder: (_) => DatabaseList(dbPath: path)));
+  }
+
+  const DatabaseList({this.dbPath});
   final String dbPath;
   @override
   _DatabaseListState createState() => _DatabaseListState();
@@ -26,20 +31,19 @@ class _DatabaseListState extends State<DatabaseList> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(title: Text("DB")), body: _getWidget(context));
+    return Scaffold(appBar: AppBar(title: const Text("DB")), body: _getWidget(context));
   }
 
   Future<List> _getDatabases() async {
     var path = "";
     if (widget.dbPath != null && widget.dbPath.isNotEmpty) {
-        path = widget.dbPath;
+      path = widget.dbPath;
     } else {
       path = await getDatabasesPath();
     }
-    final dir = new Directory(path.toString());
+    final dir = Directory(path.toString());
     final databases = dir.listSync();
-    if (databases.length > 0) {
+    if (databases.isNotEmpty) {
       return databases;
     }
     return null;
@@ -51,31 +55,27 @@ class _DatabaseListState extends State<DatabaseList> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(
-                padding: EdgeInsets.all(10.0),
+                padding: const EdgeInsets.all(10.0),
                 itemCount: snapshot.data.length,
                 itemBuilder: (context, index) {
                   return InkWell(
-                    child: Container(
-                        child: ListTile(
-                          leading: Icon(Icons.folder),
-                          title: Text(basename(snapshot.data[index].path)),
-                        ),
-                        decoration: new BoxDecoration(
-                            border: new Border(bottom: new BorderSide()))),
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => TableList(
-                                  databasePath: snapshot.data[index].path)));
+                      Navigator.push(context, MaterialPageRoute(builder: (_) => TableList(databasePath: snapshot.data[index].path.toString())));
                     },
+                    child: Container(
+                      decoration: const BoxDecoration(border: Border(bottom: BorderSide())),
+                      child: ListTile(
+                        leading: const Icon(Icons.folder),
+                        title: Text(basename(snapshot.data[index].path.toString())),
+                      ),
+                    ),
                   );
                 });
           } else if (snapshot.hasError) {
-            return Text("${snapshot.error}");
+            return Text(snapshot.error.toString());
           }
 
-          return Text("");
+          return const Center(child: CircularProgressIndicator());
         });
   }
 }

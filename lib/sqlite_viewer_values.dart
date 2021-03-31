@@ -6,20 +6,14 @@ class DataList extends StatefulWidget {
   final String databasePath;
   final String tableName;
 
-  DataList({@required this.databasePath, @required this.tableName});
+  const DataList({@required this.databasePath, @required this.tableName});
 
   @override
-  _DataListState createState() =>
-      _DataListState(databasePath: databasePath, tableName: tableName);
+  _DataListState createState() => _DataListState();
 }
 
 class _DataListState extends State<DataList> {
-  final String databasePath;
-  final String tableName;
-
   Future<List> _values;
-
-  _DataListState({@required this.databasePath, @required this.tableName});
 
   @override
   void initState() {
@@ -30,16 +24,13 @@ class _DataListState extends State<DataList> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(title: Text(tableName)),
-        body: Container(
-            padding: EdgeInsets.all(20.0), child: _getWidget(context)));
+    return Scaffold(appBar: AppBar(title: Text(widget.tableName)), body: Container(padding: const EdgeInsets.all(20.0), child: _getWidget(context)));
   }
 
   Future<List> _getValues() async {
-    final db = await openDatabase(databasePath);
-    final values = await db.rawQuery('SELECT * FROM $tableName');
-    if (values.length > 0) {
+    final db = await openDatabase(widget.databasePath);
+    final values = await db.rawQuery('SELECT * FROM ${widget.tableName}');
+    if (values.isNotEmpty) {
       return values;
     }
     return null;
@@ -50,45 +41,32 @@ class _DataListState extends State<DataList> {
         future: _values,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return JsonTable(snapshot.data, showColumnToggle: false,
-                tableHeaderBuilder: (String header) {
+            return JsonTable(snapshot.data, tableHeaderBuilder: (String header) {
               return Container(
-                padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-                decoration: BoxDecoration(
-                    border: Border.all(width: 0.5), color: Colors.grey[300]),
+                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                decoration: BoxDecoration(border: Border.all(width: 0.5), color: Colors.grey[300]),
                 child: Text(
                   header,
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.display1.copyWith(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 14.0,
-                      color: Colors.black87),
+                  style: Theme.of(context).textTheme.headline4.copyWith(fontWeight: FontWeight.w700, fontSize: 14.0, color: Colors.black87),
                 ),
               );
             }, tableCellBuilder: (value) {
               return Container(
-                padding: EdgeInsets.symmetric(horizontal: 4.0, vertical: 2.0),
-                decoration: BoxDecoration(
-                    border: Border.all(
-                        width: 0.5, color: Colors.grey.withOpacity(0.5))),
+                padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 2.0),
+                decoration: BoxDecoration(border: Border.all(width: 0.5, color: Colors.grey.withOpacity(0.5))),
                 child: Text(
-                  value,
+                  value.toString(),
                   textAlign: TextAlign.center,
-                  style: Theme.of(context)
-                      .textTheme
-                      .display1
-                      .copyWith(fontSize: 14.0, color: Colors.grey[900]),
+                  style: Theme.of(context).textTheme.headline4.copyWith(fontSize: 14.0, color: Colors.grey[900]),
                 ),
               );
-            },
-                allowRowHighlight: true,
-                rowHighlightColor: Colors.yellow[500].withOpacity(0.7),
-                paginationRowCount: snapshot.data.length);
+            }, allowRowHighlight: true, rowHighlightColor: Colors.yellow[500].withOpacity(0.7), paginationRowCount: snapshot.data.length);
           } else if (snapshot.hasError) {
             return Text("${snapshot.error}");
           }
 
-          return Text("");
+          return const Center(child: CircularProgressIndicator());
         });
   }
 }
