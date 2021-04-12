@@ -10,11 +10,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  path: ^1.7.0
+  json_table: ^2.0.1
+  path: ^1.8.0
   sqflite: ^2.0.0+3
-  json_table: ^1.4.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  lint:
+  lint: ^1.5.3
