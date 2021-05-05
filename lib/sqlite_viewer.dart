@@ -8,14 +8,14 @@ import 'package:sqflite/sqflite.dart';
 import './sqlite_viewer_tables.dart';
 
 class DatabaseList extends StatefulWidget {
-  DatabaseList({this.dbPath});
-  final String dbPath;
+  DatabaseList({required this.dbPath});
+  final String? dbPath;
   @override
   _DatabaseListState createState() => _DatabaseListState();
 }
 
 class _DatabaseListState extends State<DatabaseList> {
-  Future<List> _databases;
+ late Future<List> _databases;
 
   @override
   void initState() {
@@ -32,8 +32,8 @@ class _DatabaseListState extends State<DatabaseList> {
 
   Future<List> _getDatabases() async {
     var path = "";
-    if (widget.dbPath != null && widget.dbPath.isNotEmpty) {
-        path = widget.dbPath;
+    if (widget.dbPath != null && widget.dbPath!.isNotEmpty) {
+        path = widget.dbPath!;
     } else {
       path = await getDatabasesPath();
     }
@@ -42,7 +42,7 @@ class _DatabaseListState extends State<DatabaseList> {
     if (databases.length > 0) {
       return databases;
     }
-    return null;
+    return [];
   }
 
   FutureBuilder<List> _getWidget(BuildContext context) {
@@ -52,13 +52,13 @@ class _DatabaseListState extends State<DatabaseList> {
           if (snapshot.hasData) {
             return ListView.builder(
                 padding: EdgeInsets.all(10.0),
-                itemCount: snapshot.data.length,
+                itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
                   return InkWell(
                     child: Container(
                         child: ListTile(
                           leading: Icon(Icons.folder),
-                          title: Text(basename(snapshot.data[index].path)),
+                          title: Text(basename(snapshot.data![index].path)),
                         ),
                         decoration: new BoxDecoration(
                             border: new Border(bottom: new BorderSide()))),
@@ -67,7 +67,7 @@ class _DatabaseListState extends State<DatabaseList> {
                           context,
                           MaterialPageRoute(
                               builder: (_) => TableList(
-                                  databasePath: snapshot.data[index].path)));
+                                  databasePath: snapshot.data![index].path)));
                     },
                   );
                 });

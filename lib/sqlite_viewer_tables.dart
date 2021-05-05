@@ -7,7 +7,7 @@ import './sqlite_viewer_values.dart';
 class TableList extends StatefulWidget {
   final String databasePath;
 
-  TableList({@required this.databasePath});
+  TableList({required this.databasePath});
 
   @override
   _TableListState createState() => _TableListState(databasePath: databasePath);
@@ -15,10 +15,10 @@ class TableList extends StatefulWidget {
 
 class _TableListState extends State<TableList> {
   final String databasePath;
-  Future<List> _tables;
+ late Future<List> _tables;
 
   _TableListState({
-    @required this.databasePath,
+    required this.databasePath,
   });
 
   @override
@@ -42,7 +42,7 @@ class _TableListState extends State<TableList> {
     if (tables.length > 0) {
       return tables;
     }
-    return null;
+    return [];
   }
 
   FutureBuilder<List> _getWidget(BuildContext context) {
@@ -52,13 +52,13 @@ class _TableListState extends State<TableList> {
           if (snapshot.hasData) {
             return ListView.builder(
                 padding: EdgeInsets.all(10.0),
-                itemCount: snapshot.data.length,
+                itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
                   return InkWell(
                     child: Container(
                         child: ListTile(
                           leading: Icon(Icons.folder),
-                          title: Text(snapshot.data[index]["name"]),
+                          title: Text(snapshot.data![index]["name"]),
                         ),
                         decoration: new BoxDecoration(
                             border: new Border(bottom: new BorderSide()))),
@@ -68,7 +68,7 @@ class _TableListState extends State<TableList> {
                           MaterialPageRoute(
                               builder: (_) => DataList(
                                   databasePath: databasePath,
-                                  tableName: snapshot.data[index]["name"])));
+                                  tableName: snapshot.data![index]["name"])));
                     },
                   );
                 });

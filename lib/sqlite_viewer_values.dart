@@ -6,7 +6,7 @@ class DataList extends StatefulWidget {
   final String databasePath;
   final String tableName;
 
-  DataList({@required this.databasePath, @required this.tableName});
+  DataList({required this.databasePath, required this.tableName});
 
   @override
   _DataListState createState() =>
@@ -17,9 +17,9 @@ class _DataListState extends State<DataList> {
   final String databasePath;
   final String tableName;
 
-  Future<List> _values;
+ late Future<List> _values;
 
-  _DataListState({@required this.databasePath, @required this.tableName});
+  _DataListState({required this.databasePath, required this.tableName});
 
   @override
   void initState() {
@@ -42,7 +42,7 @@ class _DataListState extends State<DataList> {
     if (values.length > 0) {
       return values;
     }
-    return null;
+    return [];
   }
 
   FutureBuilder<List> _getWidget(BuildContext context) {
@@ -50,16 +50,16 @@ class _DataListState extends State<DataList> {
         future: _values,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return JsonTable(snapshot.data, showColumnToggle: false,
-                tableHeaderBuilder: (String header) {
+            return JsonTable(snapshot.data!, showColumnToggle: false,
+                tableHeaderBuilder: (header) {
               return Container(
                 padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                 decoration: BoxDecoration(
                     border: Border.all(width: 0.5), color: Colors.grey[300]),
                 child: Text(
-                  header,
+                  header!,
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.display1.copyWith(
+                  style: Theme.of(context).textTheme.headline6!.copyWith(
                       fontWeight: FontWeight.w700,
                       fontSize: 14.0,
                       color: Colors.black87),
@@ -76,14 +76,14 @@ class _DataListState extends State<DataList> {
                   textAlign: TextAlign.center,
                   style: Theme.of(context)
                       .textTheme
-                      .display1
+                      .bodyText1!
                       .copyWith(fontSize: 14.0, color: Colors.grey[900]),
                 ),
               );
             },
                 allowRowHighlight: true,
-                rowHighlightColor: Colors.yellow[500].withOpacity(0.7),
-                paginationRowCount: snapshot.data.length);
+                rowHighlightColor: Colors.yellow[500]!.withOpacity(0.7),
+                paginationRowCount: snapshot.data!.length);
           } else if (snapshot.hasError) {
             return Text("${snapshot.error}");
           }
