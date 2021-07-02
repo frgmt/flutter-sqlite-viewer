@@ -13,6 +13,9 @@ dependencies:
   json_table: ^2.0.1
   path: ^1.8.0
   sqflite: ^2.0.0+3
+  sqlite_viewer: 
+    git: 
+      url: https://github.com/frgmt/flutter-sqlite-viewer.git
 
 dev_dependencies:
   flutter_test:
