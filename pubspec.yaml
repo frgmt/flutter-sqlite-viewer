@@ -4,6 +4,10 @@ version: 1.0.4
 author: FRAGMENT, LLC.<info@fragment.co.jp>
 homepage: https://github.com/frgmt
 
+sqlite_viewer:
+  git:
+    url: https://github.com/frgmt/flutter-sqlite-viewer.git
+
 environment:
   sdk: ">=2.1.0 <3.0.0"
 
@@ -13,9 +17,6 @@ dependencies:
   json_table: ^2.0.1
   path: ^1.8.0
   sqflite: ^2.0.0+3
-  sqlite_viewer: 
-    git: 
-      url: https://github.com/frgmt/flutter-sqlite-viewer.git
 
 dev_dependencies:
   flutter_test:
