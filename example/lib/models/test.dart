@@ -11,8 +11,7 @@ class TestDatabaseProvider extends DatabaseProvider {
 
   @override
   createDatabase(Database db, int version) {
-    db.execute(
-        """
+    db.execute("""
       CREATE TABLE first(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         column1 TEXT,
@@ -20,10 +19,8 @@ class TestDatabaseProvider extends DatabaseProvider {
         column3 TEXT,
         created INTEGER DEFAULT (cast(strftime('%s','now') as int))
       );
-      """
-    );
-    db.execute(
-      """
+      """);
+    db.execute("""
       CREATE TABLE second(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         column1 TEXT,
@@ -31,8 +28,7 @@ class TestDatabaseProvider extends DatabaseProvider {
         column3 TEXT,
         created INTEGER DEFAULT (cast(strftime('%s','now') as int))
       );
-    """
-      );
+    """);
   }
 }
 
@@ -40,12 +36,12 @@ class Test {
   String column1;
   String column2;
   String column3;
-  DateTime created;
+  DateTime? created;
 
   Test({
-    this.column1,
-    this.column2,
-    this.column3,
+    required this.column1,
+    required this.column2,
+    required this.column3,
   });
 
   factory Test.fromMap(Map<String, dynamic> map) {
@@ -56,10 +52,9 @@ class Test {
     );
   }
 
-  Map<String, dynamic> toMap() =>
-    {
-      'column1': column1,
-      'column2': column2,
-      'column3': column3,
-    };
+  Map<String, dynamic> toMap() => {
+        'column1': column1,
+        'column2': column2,
+        'column3': column3,
+      };
 }

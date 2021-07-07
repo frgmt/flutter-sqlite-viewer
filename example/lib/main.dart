@@ -11,10 +11,7 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData.light(),
-      home: new HomeScreen()
-    );
+    return MaterialApp(theme: ThemeData.light(), home: new HomeScreen());
   }
 }
 
@@ -28,30 +25,38 @@ class HomeScreen extends StatelessWidget {
           new IconButton(
             icon: new Icon(Icons.folder),
             onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (_) => DatabaseList()));
-            }
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => DatabaseList(),
+                ),
+              );
+            },
           ),
-        ]
+        ],
       ),
       floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
-          onPressed: () {
-            Future<int> future = _add(Test(
+        child: Icon(Icons.add),
+        onPressed: () {
+          Future<int?> future = _add(
+            Test(
               column1: _getRandom(),
               column2: _getRandom(),
               column3: _getRandom(),
-            ));
-            future
-                .then((value) => print(value))
-                .catchError((error) => print(error));
-          }),
+            ),
+          );
+          future
+              .then((value) => print(value))
+              .catchError((error) => print(error));
+        },
+      ),
     );
   }
 
-  Future<int> _add(Test test) async {
+  Future<int?> _add(Test test) async {
     final TestDatabaseProvider provider = TestDatabaseProvider();
-    final Database database = await provider.database;
-    return await database.insert(provider.tableName, test.toMap());
+    final Database? database = await provider.database;
+    return await database?.insert(provider.tableName, test.toMap());
   }
 
   String _getRandom() {
