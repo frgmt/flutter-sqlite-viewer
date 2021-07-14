@@ -3,13 +3,13 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 abstract class DatabaseProvider {
-  Database _instance;
+  Database? _instance;
 
   String get databaseName;
 
   String get tableName;
 
-  Future<Database> get database async {
+  Future<Database?> get database async {
     if (_instance == null) {
       var path = await getDatabasesPath();
       _instance = await openDatabase(
