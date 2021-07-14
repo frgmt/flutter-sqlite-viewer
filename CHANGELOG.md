@@ -1,6 +1,14 @@
+## 1.0.5
+
+- Support null safety
+
 ## 1.0.4
 
-- add open function `DatabaseList.open(context,{dbPath})`
+- Add open function `DatabaseList.open(context,{dbPath})`
+
+## 1.0.3
+
+- Custom Database Path
 
 ## 1.0.2
 
